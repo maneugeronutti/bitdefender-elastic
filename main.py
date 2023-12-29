@@ -61,11 +61,12 @@ for email in lista_emails:
     print(email.text)
 
 # pegar emails com um anexo específico
+anexo_relatorio = f"{nome_relatorio}-{data_formatada}"
 lista_emails = meu_email.fetch(AND(from_=email_remetente))
 for email in lista_emails:
     if len(email.attachments) > 0:
         for anexo in email.attachments:
-            if nome_relatorio in anexo.filename:
+            if anexo_relatorio in anexo.filename:
                 print(anexo.content_type)
                 print(anexo.payload)
 
