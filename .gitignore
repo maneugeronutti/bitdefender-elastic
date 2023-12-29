@@ -1,2 +1,7 @@
 *.csv
 *.pdf
+main-statusprotecaoendpoint.py
+main-auditoriaseguranca.py
+main-topendpointsinfectados.py
+main-statusmalware.py
+main-hyperdetect.py

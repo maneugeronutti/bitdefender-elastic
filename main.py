@@ -10,18 +10,19 @@ import os
 
 ################### INFORMAÇÕES IMPORTANTES ###################
 # Emails de um destinatário
-username = "manoel.geronutti@caio.com.br"
-password = "d198a4Oh1!@"
+username = "destinatario@email.com"
+password = "PASSWORD"
 
-email_remetente = "maneu.geronutti@gmail.com"
+email_remetente = "noreply-gzc@info.bitdefender.com"
 
 # Configurações do Elasticsearch (incluindo autenticação)
 host = "172.16.1.87"
 port = 9200
 usuario = "elastic"
-senha = 'T4Hy!!2#dR4kk14'
+senha = 'PASSWORD ELASTIC'
 
-nome_relatorio = "Relatório de Status de Proteção do Endpoint"
+# Nome do arquivo de anexo que deve ser verificado
+nome_relatorio = "Relatório de Auditoria de Segurança"
 ###############################################################
 def limpar_diretorio(caminho_diretorio):
     try:
@@ -79,14 +80,16 @@ for email in lista_emails:
 
                     # Mapeamento de renomeação de colunas
                     mapeamento_renomeacao = {
-                        "Nome do Endpoint": "nomeEndpoint",
-                        "FQDN do Endpoint": "fqdnEndpoint",
-                        "IP": "ipEndpoint",
-                        "Status da Atualização": "statusdaatualizacaoEndpint",
-                        "Última atualização": "ultimaatualizacaoEndpoint",
-                        "Antimalware": "antimawareEndpoint",
-                        "Gerenciado": "gerenciadoEndpoint",
-                        "Online": "onlineEndpoint"
+                        "Nome do Endpoint": "endpointNome",
+                        "FQDN do Endpoint": "endpointFQDN",
+                        "Usuário": "endpointUsuario",
+                        "Ocorrências": "endpointOcorrencia",
+                        "Ultima ocorrência":"endpointUltimaOcorrencia",
+                        "Módulo": "endpintModulo",
+                        "Tipo de Evento": "endpointTipoDeEvento",
+                        "Detalhes": "endpointDetalhes",
+                        "SHA256 Hash": "endpointSHA256Hash",
+                        "Ataque sem arquivo": "endpointAtaqueSemArquivo"
                     }
 
                     # Carregar dados do CSV usando pandas com tratamento de NaN
@@ -107,7 +110,7 @@ for email in lista_emails:
                         with Elasticsearch([{'host': host, 'port': port, 'scheme': 'http'}], basic_auth=(usuario, senha)) as es:
                             for documento in dados_json:
                                 # Adicione um campo personalizado
-                                documento['reportName'] = nome_relatorio
+                                documento['nomeRelatorio'] = nome_relatorio
 
                                 documento['@timestamp'] = datetime.now(pytz.utc).isoformat()
                                 # Converta o timestamp para o fuso horário desejado (por exemplo, America/Sao_Paulo)
